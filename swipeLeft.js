@@ -92,10 +92,14 @@ swipeLeft.prototype = {
             this.parentNode.style['overflowY'] = "hidden";
         } else {
             this.parentNode.style['overflowY'] = "auto";
-            this.resetAll()
+            console.log('闪回')
             // 解决滚动时左滑太灵敏的问题
             if (!this.ismoving)
                 return false
+            else{
+                // 避免上下滑动时闪回
+                this.resetAll()
+            }
         }
         if (this.moveToX == 0) {
             this.ismoving = true
