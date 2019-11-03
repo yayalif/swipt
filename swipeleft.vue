@@ -18,7 +18,7 @@
     .content{
         -webkit-overflow-scrolling: touch;
         overflow:hidden;
-        
+        // transition: all 0.4s ease 0s;
         .pull-refresh {
         width: 100%;
         color: #999;
@@ -183,14 +183,26 @@ export default {
                 upImg: 'arrow.png',
                 refreshText: '正在刷新数据...',
                 refreshImg: 'loading.png'
-            }
+            },
+            isLeftMoving: false
+
         }
+    },
+    mounted () {
+        this.$eventBus.$on('isLeftMoving', (val) => {
+            this.isLeftMoving = val
+        })
     },
     methods: {
         touchStart (e) {
       this.startY = e.targetTouches[0].pageY
     },
     touchMove (e) {
+        if (this.isLeftMoving) {
+            console.log('正在移动，怎么下滑了')
+            return false
+        }
+        console.log('正在移动，怎么下滑了！！！！！！！！')
       this.scrollIsToTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop // safari 获取scrollTop用window.pageYOffset
         if (e.targetTouches[0].pageY > this.startY) {
             console.log(this.scrollIsToTop, 'this.scrollIsToTop')
@@ -254,6 +266,7 @@ export default {
         this.isDropDown = false
         this.dropDownState = 1
         this.top = 0
+        document.querySelector('.content').style.WebkitTransform = "translateY(" + 0 + "px)";
         },
         /**
          * 刷新数据

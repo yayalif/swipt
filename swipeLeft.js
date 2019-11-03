@@ -73,7 +73,7 @@ swipeLeft.prototype = {
         this.$el.style.transition = "unset";
         this.childNode.style.transition = "unset";
         console.log('start 里层')
-
+        this.ismoving = false
         this.resetSiblings();
     },
     /**
@@ -89,15 +89,28 @@ swipeLeft.prototype = {
         // 限制了左右滑动的时候页面上下滚动
         let sideL = Math.sqrt(this.moveX * this.moveX + this.moveY * this.moveY);
         if (Math.abs(this.moveY) / sideL < 1 / 2) {
+            // if (!this.ismoving) {
+            //     this.parentNode.style['overflowY'] = "hidden";
+            //     Vue.prototype.$eventBus.$emit('isLeftMoving', true)
+            // } else {
+            //     this.parentNode.style['overflowY'] = "hidden";
+            //     Vue.prototype.$eventBus.$emit('isLeftMoving', true)
+            // }
+            // 注意,因为 y 移动距离过小,所以这样设置, 为了防止左右滑动时,列表上下有轻微滑动
             this.parentNode.style['overflowY'] = "hidden";
+            Vue.prototype.$eventBus.$emit('isLeftMoving', true)
         } else {
-            this.parentNode.style['overflowY'] = "auto";
-            console.log('闪回')
+            console.log('y----大')
             // 解决滚动时左滑太灵敏的问题
-            if (!this.ismoving)
+            if (!this.ismoving) {
+                this.parentNode.style['overflowY'] = "auto";
+                Vue.prototype.$eventBus.$emit('isLeftMoving', false)
                 return false
+            }
             else{
                 // 避免上下滑动时闪回
+                this.parentNode.style['overflowY'] = "hidden";
+                Vue.prototype.$eventBus.$emit('isLeftMoving', true)
                 this.resetAll()
             }
         }

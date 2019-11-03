@@ -4,7 +4,7 @@ import VueRouter from "vue-router";
 import './swipeLeft.js'
 import App from "./App";
 Vue.use(VueRouter);
-
+Vue.prototype.$eventBus = new Vue()
 const router = new VueRouter({
     routes
 });
