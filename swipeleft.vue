@@ -199,10 +199,8 @@ export default {
     },
     touchMove (e) {
         if (this.isLeftMoving) {
-            console.log('正在移动，怎么下滑了')
             return false
         }
-        console.log('正在移动，怎么下滑了！！！！！！！！')
       this.scrollIsToTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop // safari 获取scrollTop用window.pageYOffset
         if (e.targetTouches[0].pageY > this.startY) {
             console.log(this.scrollIsToTop, 'this.scrollIsToTop')
