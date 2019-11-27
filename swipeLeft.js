@@ -205,6 +205,10 @@ swipeLeft.prototype = {
 
             this.absX = 0
             this.absY = 0
+			// 注意，这里要恢复初始值，否则下次第一次不能上下滑动
+			
+			this.parentNode.style['overflowY'] = "auto";
+			Vue.prototype.$eventBus.$emit('isLeftMoving', false)
         }        
     }
 }
